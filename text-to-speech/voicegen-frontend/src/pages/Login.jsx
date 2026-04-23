@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogIn, User, Lock, AlertCircle } from 'lucide-react';
+import { API_BASE } from '../config';
 import './Auth.css';
 
 export default function Login() {
@@ -23,7 +24,7 @@ export default function Login() {
             formData.append('username', username);
             formData.append('password', password);
 
-            const res = await fetch('http://localhost:8000/token', {
+            const res = await fetch(`${API_BASE}/token`, {
                 method: 'POST',
                 body: formData,
             });

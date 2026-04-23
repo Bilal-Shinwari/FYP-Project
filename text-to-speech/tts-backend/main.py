@@ -15,8 +15,11 @@ from datetime import timedelta
 
 import models, schemas, auth, database
 
-# Append finetuned model directory to path to import inference logic
-FINETUNE_DIR = r"D:\FYP\FYP\t3_finetuned_model\chatterbox-finetuning"
+# FINETUNE_DIR can be overridden via env var (e.g. in Google Colab)
+FINETUNE_DIR = os.environ.get(
+    "FINETUNE_DIR",
+    r"D:\FYP\FYP\t3_finetuned_model\chatterbox-finetuning"
+)
 sys.path.append(FINETUNE_DIR)
 
 try:
@@ -30,10 +33,12 @@ except ImportError as e:
 
 app = FastAPI(title="Urdu TTS & Voice Cloning API")
 
+# ALLOW_ALL_ORIGINS=1 enables wildcard CORS for Colab/ngrok deployments
+_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_credentials=True,
+    allow_origins=["*"] if os.environ.get("ALLOW_ALL_ORIGINS") == "1" else _origins,
+    allow_credentials=os.environ.get("ALLOW_ALL_ORIGINS") != "1",
     allow_methods=["*"],
     allow_headers=["*"],
 )

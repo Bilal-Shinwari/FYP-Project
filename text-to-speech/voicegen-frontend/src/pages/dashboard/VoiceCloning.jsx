@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE } from '../../config';
 import { AudioWaveform, Upload, Sliders, Play, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AudioVisualizer3D from '../../components/AudioVisualizer3D';
@@ -39,7 +40,7 @@ export default function VoiceCloning() {
             formData.append("tau", String(tau));
             formData.append("ref", file);
 
-            const res = await fetch("http://localhost:8000/clone", {
+            const res = await fetch(`${API_BASE}/clone`, {
                 method: "POST",
                 headers: {
                     'Authorization': `Bearer ${token}`

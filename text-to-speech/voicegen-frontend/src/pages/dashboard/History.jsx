@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { History, Clock, Play, Download } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE } from '../../config';
 import './DashboardComponents.css';
 
 export default function HistoryPage() {
@@ -8,7 +9,6 @@ export default function HistoryPage() {
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const API_BASE = "http://localhost:8000";
 
     useEffect(() => {
         if (token) {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE } from '../../config';
 import { Mic, Play, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import AudioVisualizer3D from '../../components/AudioVisualizer3D';
@@ -30,7 +31,7 @@ export default function TextToSpeech() {
             const formData = new FormData();
             formData.append("text", text);
 
-            const res = await fetch("http://localhost:8000/tts_simple", {
+            const res = await fetch(`${API_BASE}/tts_simple`, {
                 method: "POST",
                 headers: {
                     'Authorization': `Bearer ${token}`
