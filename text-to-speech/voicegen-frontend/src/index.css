@@ -1,0 +1,241 @@
+/* ===== DESIGN SYSTEM - White + Navy Blue ===== */
+:root {
+  /* Colors - Enhanced Professional Palette */
+  --navy-dark: #020617;
+  /* Deeper, richer dark */
+  --navy-primary: #1e3a8a;
+  /* Classic Royal Blue */
+  --navy-medium: #2563eb;
+  /* Vibrant Blue */
+  --navy-light: #3b82f6;
+  /* Bright Blue */
+  --navy-accent: #60a5fa;
+  /* Soft Accent Blue */
+  --navy-surface: #eff6ff;
+  /* Very light blue tint for backgrounds */
+
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  /* Cool gray tint */
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  /* Almost black, high contrast */
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-white: #ffffff;
+
+  /* Gradients - More Dynamic */
+  --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  --gradient-hero: linear-gradient(120deg, #020617 0%, #0f172a 40%, #1e3a8a 100%);
+  --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #93c5fd 100%);
+  --gradient-surface: linear-gradient(to bottom right, #ffffff, #f8fafc);
+
+  /* Spacing - Consistent Rhythm */
+  --space-xs: 0.5rem;
+  /* 8px */
+  --space-sm: 1rem;
+  /* 16px */
+  --space-md: 1.5rem;
+  /* 24px */
+  --space-lg: 2.5rem;
+  /* 40px */
+  --space-xl: 4rem;
+  /* 64px */
+  --space-2xl: 6rem;
+  /* 96px */
+  --space-3xl: 8rem;
+  /* 128px */
+  --space-4xl: 10rem;
+  /* 160px */
+
+  /* Border Radius - Modern & Soft */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows - Layered & Smooth */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(15, 23, 42, 0.05),
+    0 2px 4px -1px rgba(15, 23, 42, 0.03);
+  --shadow-lg:
+    0 10px 15px -3px rgba(15, 23, 42, 0.05),
+    0 4px 6px -2px rgba(15, 23, 42, 0.02);
+  --shadow-xl:
+    0 20px 25px -5px rgba(15, 23, 42, 0.08),
+    0 10px 10px -5px rgba(15, 23, 42, 0.03);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+
+  /* Typography */
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  /* Modern tight spacing */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--gray-50);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--navy-light);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--navy-primary);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--navy-accent);
+  color: var(--white);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.container-sm {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-navy {
+  color: var(--navy-primary);
+}
+
+.bg-navy {
+  background: var(--navy-primary);
+}
+
+.bg-white {
+  background: var(--white);
+}
+
+.bg-gray {
+  background: var(--gray-50);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  :root {
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+  }
+}

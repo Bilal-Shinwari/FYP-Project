@@ -1,0 +1,69 @@
+# ── ML Model Weights (too large for GitHub) ──────────────────────────────────
+*.safetensors
+*.pt
+*.ckpt
+*.bin
+pretrained_models/
+t3_finetuned.safetensors
+t3_turbo_finetuned.safetensors
+
+# ── Training / Dataset Audio ──────────────────────────────────────────────────
+MyTTSDataset/wavs/
+MyTTSDataset/preprocess/
+FileBasedDataset/*.wav
+FileBasedDataset/*.txt
+
+# ── Generated Audio Output ────────────────────────────────────────────────────
+text-to-speech/tts-backend/static/*.wav
+text-to-speech/cloned.wav
+chatterbox_output/
+
+# Keep the speaker reference voice prompt (small, needed at inference time)
+!t3_finetuned_model/chatterbox-finetuning/speaker_reference/2.wav
+
+# ── Python Artifacts ─────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# ── Database ──────────────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Node.js / Frontend ────────────────────────────────────────────────────────
+node_modules/
+dist/
+.next/
+out/
+.pnp
+.pnp.*
+*.tsbuildinfo
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── Environment & Secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+.envrc
+*.pem
+
+# ── Claude Code local settings ───────────────────────────────────────────────
+.claude/
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

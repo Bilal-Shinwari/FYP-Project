@@ -1,0 +1,132 @@
+.header {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: var(--space-md) 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: transform var(--transition-fast);
+}
+
+.logo:hover {
+    transform: scale(1.02);
+}
+
+.logo-urdu {
+    color: var(--navy-primary);
+    font-size: 1.8rem;
+}
+
+.logo-text {
+    color: var(--navy-primary);
+}
+
+.nav {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    position: relative;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+}
+
+.nav-link svg {
+    transition: transform var(--transition-fast);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--navy-accent);
+    transition: width var(--transition-normal);
+}
+
+.nav-link:hover {
+    color: var(--navy-primary);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link-primary {
+    background: var(--navy-primary);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.nav-link-primary::after {
+    display: none;
+}
+
+.nav-link-primary:hover {
+    background: var(--navy-dark);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+    .nav {
+        gap: var(--space-sm);
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+    }
+
+    .nav-link-primary {
+        padding: 8px 16px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .logo-urdu {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        gap: var(--space-xs);
+    }
+
+    .nav-link:not(.nav-link-primary) {
+        display: none;
+    }
+}
