@@ -3,7 +3,7 @@ from safetensors.torch import load_file
 from src.chatterbox_.tts import ChatterboxTTS
 from pathlib import Path
 
-BASE = Path("D:/t3_finetuned_model/chatterbox-finetuning")
+BASE = Path("D:/FYP/FYP/t3_finetuned_model/chatterbox-finetuning")
 
 # Load model from local pretrained folder
 tts = ChatterboxTTS.from_local(BASE / "pretrained_models", device="cpu")

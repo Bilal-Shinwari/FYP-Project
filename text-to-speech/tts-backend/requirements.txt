@@ -4,3 +4,7 @@ sqlalchemy
 passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
+soundfile
+numpy
+torch
+torchaudio

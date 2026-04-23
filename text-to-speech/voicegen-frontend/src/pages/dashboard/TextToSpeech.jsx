@@ -39,7 +39,8 @@ export default function TextToSpeech() {
             });
 
             if (!res.ok) {
-                throw new Error("Failed to generate speech");
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.detail || "Failed to generate speech");
             }
 
             const blob = await res.blob();

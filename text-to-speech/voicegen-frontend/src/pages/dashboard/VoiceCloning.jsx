@@ -48,7 +48,8 @@ export default function VoiceCloning() {
             });
 
             if (!res.ok) {
-                throw new Error("Failed to clone voice");
+                const errData = await res.json().catch(() => ({}));
+                throw new Error(errData.detail || "Failed to clone voice");
             }
 
             const blob = await res.blob();

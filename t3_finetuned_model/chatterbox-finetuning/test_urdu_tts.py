@@ -10,7 +10,7 @@ from src.chatterbox_.tts import ChatterboxTTS
 # ==========================================================
 
 # Base directory (where chatterbox-finetuning repo is located)
-BASE_DIR = Path("D:/t3_finetuned_model/chatterbox-finetuning")
+BASE_DIR = Path("D:/FYP/FYP/t3_finetuned_model/chatterbox-finetuning")
 
 # Pretrained components folder
 PRETRAINED_DIR = BASE_DIR / "pretrained_models"
