@@ -5,6 +5,15 @@ import uuid
 import numpy as np
 import soundfile as sf
 import re
+
+# Download model weights from HF Hub when running on HF Spaces
+_MODEL_REPO   = os.environ.get("HF_MODEL_REPO", "")
+_FINETUNE_DIR = os.environ.get("FINETUNE_DIR", r"D:\FYP\FYP\t3_finetuned_model\chatterbox-finetuning")
+if _MODEL_REPO and not os.path.exists(os.path.join(_FINETUNE_DIR, "t3_finetuned.safetensors")):
+    from huggingface_hub import snapshot_download
+    print(f"Downloading model from {_MODEL_REPO} into {_FINETUNE_DIR}...")
+    snapshot_download(repo_id=_MODEL_REPO, local_dir=_FINETUNE_DIR, repo_type="model")
+
 from fastapi import FastAPI, Depends, HTTPException, status, Form, UploadFile, File
 from fastapi.responses import FileResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -35,6 +44,7 @@ app = FastAPI(title="Urdu TTS & Voice Cloning API")
 
 # ALLOW_ALL_ORIGINS=1 enables wildcard CORS for Colab/ngrok deployments
 _origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -55,8 +65,9 @@ app.add_middleware(
 
 models.Base.metadata.create_all(bind=database.engine)
 
-os.makedirs("static", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+STATIC_DIR = os.environ.get("STATIC_DIR", "/tmp/static")
+os.makedirs(STATIC_DIR, exist_ok=True)
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 tts_engine = None
 device = "cuda" if (torch and torch.cuda.is_available()) else "cpu"
@@ -154,7 +165,7 @@ def generate_audio_file(text: str, prompt_path: str, param_overrides: dict = Non
 
     final_audio = np.concatenate(all_chunks)
     filename = f"generated_{uuid.uuid4().hex}.wav"
-    filepath = os.path.join("static", filename)
+    filepath = os.path.join(STATIC_DIR, filename)
     sf.write(filepath, final_audio, sample_rate)
     return filepath
 
@@ -183,7 +194,7 @@ async def clone_voice(
     current_user: models.User = Depends(auth.get_current_user),
     db: Session = Depends(database.get_db)
 ):
-    temp_ref_path = os.path.join("static", f"temp_ref_{uuid.uuid4().hex}.wav")
+    temp_ref_path = os.path.join(STATIC_DIR, f"temp_ref_{uuid.uuid4().hex}.wav")
     try:
         with open(temp_ref_path, "wb") as f:
             f.write(await ref.read())

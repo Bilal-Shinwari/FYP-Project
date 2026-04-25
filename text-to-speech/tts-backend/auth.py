@@ -1,3 +1,11 @@
+import sys
+import types
+import bcrypt as _bcrypt_mod
+if 'bcrypt.__about__' not in sys.modules:
+    _about = types.ModuleType('bcrypt.__about__')
+    _about.__version__ = _bcrypt_mod.__version__
+    sys.modules['bcrypt.__about__'] = _about
+
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
