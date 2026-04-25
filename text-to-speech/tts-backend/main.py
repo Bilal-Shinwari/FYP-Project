@@ -37,11 +37,21 @@ app = FastAPI(title="Urdu TTS & Voice Cloning API")
 _origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if os.environ.get("ALLOW_ALL_ORIGINS") == "1" else _origins,
-    allow_credentials=os.environ.get("ALLOW_ALL_ORIGINS") != "1",
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"] if os.environ.get("ALLOW_ALL_ORIGINS") == "1" else _origins,
+#     allow_credentials=os.environ.get("ALLOW_ALL_ORIGINS") != "1",
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 models.Base.metadata.create_all(bind=database.engine)
 
