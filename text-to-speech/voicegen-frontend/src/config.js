@@ -1,4 +1,4 @@
-// API base URL — override from browser console for Colab/ngrok:
-//   localStorage.setItem('api_base', 'https://xxxx.ngrok-free.app')
+// API base URL — override from browser console if needed:
+//   localStorage.setItem('api_base', 'https://your-custom-backend.hf.space')
 //   then refresh the page
-export const API_BASE = localStorage.getItem('api_base') || 'http://localhost:8000';
+export const API_BASE = localStorage.getItem('api_base') || 'https://mbilalcr07-bol-backend.hf.space';
