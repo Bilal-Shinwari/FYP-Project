@@ -59,7 +59,7 @@ export default function About() {
                     </p>
 
                     <div className="team-grid">
-                        <div className="team-card">
+                        <div className="team-card team-card-highlight">
                             <div className="team-icon-wrapper">
                                 <Brain size={28} />
                             </div>
@@ -75,18 +75,18 @@ export default function About() {
                                 <Code size={28} />
                             </div>
                             <h3 className="team-name">Rohail Ahmad</h3>
-                            <p className="team-role">Full Stack Lead</p>
+                            <p className="team-role">Deployment &amp; Backend Lead</p>
                             <p className="team-description">
                                 Built the web interface, backend, API, and handled deployment.
                             </p>
                         </div>
 
-                        <div className="team-card">
+                        <div className="team-card team-card-highlight">
                             <div className="team-icon-wrapper">
                                 <Palette size={28} />
                             </div>
                             <h3 className="team-name">Fiza Wahab</h3>
-                            <p className="team-role">Data &amp; Design Lead</p>
+                            <p className="team-role">Frontend &amp; Data Lead</p>
                             <p className="team-description">
                                 Handled dataset curation, system documentation, and overall design consistency.
                             </p>
