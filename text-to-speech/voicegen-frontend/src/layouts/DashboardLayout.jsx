@@ -1,27 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-    Mic,
-    AudioWaveform,
-    History,
-    Settings,
-    LogOut,
-    Menu,
-    X,
-    User
+    Mic, AudioWaveform, History, Settings,
+    LogOut, Menu, X, User, Sun, Moon
 } from 'lucide-react';
 import './DashboardLayout.css';
 
 export default function DashboardLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+        localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+    }, [darkMode]);
+
+    const handleLogout = () => { logout(); navigate('/login'); };
 
     const navItems = [
         { icon: Mic, label: 'Text-to-Speech', path: '/dashboard/tts' },
@@ -38,6 +35,9 @@ export default function DashboardLayout() {
                     {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
                 <span className="mobile-logo">بول Urdu TTS</span>
+                <button onClick={() => setDarkMode(!darkMode)} className="menu-btn">
+                    {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
             </div>
 
             {/* Sidebar */}
@@ -50,9 +50,7 @@ export default function DashboardLayout() {
                 </div>
 
                 <div className="user-profile-mini">
-                    <div className="avatar">
-                        <User size={20} />
-                    </div>
+                    <div className="avatar"><User size={20} /></div>
                     <div className="user-info">
                         <span className="username">{user?.username || 'Guest'}</span>
                         <span className="user-role">Free Plan</span>
@@ -64,9 +62,7 @@ export default function DashboardLayout() {
                         <NavLink
                             key={item.path}
                             to={item.path}
-                            className={({ isActive }) =>
-                                `nav-item ${isActive ? 'active' : ''}`
-                            }
+                            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
                             onClick={() => setSidebarOpen(false)}
                         >
                             <item.icon size={20} />
@@ -76,6 +72,10 @@ export default function DashboardLayout() {
                 </nav>
 
                 <div className="sidebar-footer">
+                    <button onClick={() => setDarkMode(!darkMode)} className="theme-toggle-btn">
+                        {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                        <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                    </button>
                     <button onClick={handleLogout} className="logout-btn">
                         <LogOut size={20} />
                         <span>Sign Out</span>
@@ -88,12 +88,8 @@ export default function DashboardLayout() {
                 <Outlet />
             </main>
 
-            {/* Overlay for mobile */}
             {sidebarOpen && (
-                <div
-                    className="sidebar-overlay"
-                    onClick={() => setSidebarOpen(false)}
-                />
+                <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
             )}
         </div>
     );

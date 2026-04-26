@@ -128,6 +128,14 @@ def read_users_me(current_user: models.User = Depends(auth.get_current_user)):
     return current_user
 
 
+# Generation params — defined here so they don't depend on the HF model repo's inference.py
+BASE_PARAMS = {
+    "temperature": 1.0,       # higher = less likely to repeat tokens
+    "exaggeration": 0.5,
+    "cfg_weight": 0.5,
+    "repetition_penalty": 1.3,
+}
+
 # --- GENERATION HELPERS ---
 def generate_audio_file(text: str, prompt_path: str, param_overrides: dict = None):
     if tts_engine is None:
@@ -138,8 +146,7 @@ def generate_audio_file(text: str, prompt_path: str, param_overrides: dict = Non
     if not sentences:
         raise HTTPException(status_code=422, detail="No valid text provided.")
 
-    # Merge base params with any per-request overrides (e.g. exaggeration from tau slider)
-    params = dict(inf_module.PARAMS)
+    params = dict(BASE_PARAMS)
     if param_overrides:
         params.update(param_overrides)
 

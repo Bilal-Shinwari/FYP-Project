@@ -1,0 +1,60 @@
+.av-wrapper {
+    width: 100%;
+    margin-top: 1.25rem;
+    border-radius: 16px;
+    overflow: hidden;
+    background: transparent;
+}
+
+.av-canvas-2d {
+    display: block;
+    width: 100%;
+    height: 220px;
+}
+
+.av-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 0 2px;
+}
+
+.av-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #475569;
+    transition: background 0.3s ease;
+}
+
+.av-dot--playing {
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: dot-pulse 1.2s ease infinite;
+}
+
+@keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+}
+
+.av-label {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.av-audio-row {
+    display: flex;
+    justify-content: center;
+    padding: 6px 16px 14px;
+}
+
+.av-audio {
+    width: 100%;
+    border-radius: 8px;
+    height: 36px;
+}

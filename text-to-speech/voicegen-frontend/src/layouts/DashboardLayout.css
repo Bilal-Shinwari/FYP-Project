@@ -6,7 +6,7 @@
 
 /* Sidebar Styles */
 .sidebar {
-    width: 260px;
+    width: 268px;
     background-color: var(--white);
     border-right: 1px solid var(--gray-200);
     display: flex;
@@ -17,6 +17,15 @@
     left: 0;
     z-index: 50;
     transition: transform 0.3s ease;
+    box-shadow: 2px 0 12px rgba(15, 23, 42, 0.05);
+}
+
+.sidebar::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #1e40af, #3b82f6, #818cf8);
+    flex-shrink: 0;
 }
 
 .sidebar-header {
@@ -140,9 +149,11 @@
 /* Main Content */
 .dashboard-content {
     flex: 1;
-    margin-left: 260px;
-    padding: var(--space-xl);
+    margin-left: 268px;
+    padding: 2.5rem 3rem;
     overflow-y: auto;
+    min-height: 100vh;
+    background: #f1f5f9;
 }
 
 /* Mobile Header */
@@ -179,6 +190,78 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 40;
+}
+
+.theme-toggle-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: transparent;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 8px;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--navy-surface);
+    border-color: var(--navy-light);
+    color: var(--navy-primary);
+}
+
+/* Dark mode sidebar */
+[data-theme="dark"] .sidebar {
+    background-color: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .sidebar-header {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .user-profile-mini {
+    background: #0f172a;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .nav-item:hover {
+    background-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .sidebar-footer {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .theme-toggle-btn {
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover {
+    background: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .logout-btn {
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .mobile-header {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .dashboard-layout {
+    background-color: #0f172a;
 }
 
 /* Responsive */
