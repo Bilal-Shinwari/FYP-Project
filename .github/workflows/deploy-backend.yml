@@ -1,0 +1,27 @@
+name: Deploy Backend to HF Spaces
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'hf-space/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Push hf-space to HF Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          cd hf-space
+          git init
+          git config user.email "ci@github.com"
+          git config user.name "GitHub Actions"
+          git add .
+          git commit -m "Deploy from GitHub ${{ github.sha }}"
+          git push --force https://mbilalcr07:${HF_TOKEN}@huggingface.co/spaces/mbilalcr07/bol-backend main

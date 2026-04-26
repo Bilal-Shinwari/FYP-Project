@@ -6,6 +6,12 @@
 > HF Model Repo (weights): https://huggingface.co/mbilalcr07/bol-urdu-tts  
 > Live API URL: https://mbilalcr07-bol-backend.hf.space  
 
+The build completed in ~21 seconds on Vercel's servers. Here's what's now fully live end-to-end:
+
+Layer	URL
+Frontend	https://voicegen-frontend.vercel.app
+Backend API	https://mbilalcr07-bol-backend.hf.space
+Model weights	https://huggingface.co/mbilalcr07/bol-urdu-tts
 ---
 
 ## 1. Project Overview

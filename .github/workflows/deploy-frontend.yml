@@ -1,0 +1,33 @@
+name: Deploy Frontend to Vercel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'text-to-speech/voicegen-frontend/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: text-to-speech/voicegen-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: text-to-speech/voicegen-frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: text-to-speech/voicegen-frontend
+        run: npm run build
+
+      - name: Deploy to Vercel
+        working-directory: text-to-speech/voicegen-frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel --token $VERCEL_TOKEN --prod --yes
