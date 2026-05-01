@@ -1,58 +1,12 @@
-import { useState, useEffect } from "react";
-import { API_BASE } from '../../config';
 import { Mic, Play, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useGeneration } from '../../context/GenerationContext';
 import AudioVisualizer3D from '../../components/AudioVisualizer3D';
 import './DashboardComponents.css';
 
 export default function TextToSpeech() {
-    const [text, setText] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [audioUrl, setAudioUrl] = useState(null);
-    const [error, setError] = useState("");
     const { token } = useAuth();
-
-    useEffect(() => {
-        return () => {
-            if (audioUrl) URL.revokeObjectURL(audioUrl);
-        };
-    }, [audioUrl]);
-
-    const generate = async () => {
-        setError("");
-        setAudioUrl(null);
-        if (!text.trim()) {
-            setError("Please enter some text");
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const formData = new FormData();
-            formData.append("text", text);
-
-            const res = await fetch(`${API_BASE}/tts_simple`, {
-                method: "POST",
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
-                body: formData,
-            });
-
-            if (!res.ok) {
-                const errData = await res.json().catch(() => ({}));
-                throw new Error(errData.detail || "Failed to generate speech");
-            }
-
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            setAudioUrl(url);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { ttsText, setTtsText, ttsLoading, ttsAudioUrl, ttsError, generateTTS } = useGeneration();
 
     return (
         <div className="dashboard-card">
@@ -70,20 +24,20 @@ export default function TextToSpeech() {
                 <textarea
                     className="text-input"
                     placeholder="اردو متن یہاں لکھیں..."
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    value={ttsText}
+                    onChange={(e) => setTtsText(e.target.value)}
                     rows={6}
                 />
 
                 <button
                     className="primary-btn"
-                    onClick={generate}
-                    disabled={loading}
+                    onClick={() => generateTTS(token)}
+                    disabled={ttsLoading}
                 >
-                    {loading ? (
+                    {ttsLoading ? (
                         <>
                             <Loader2 size={20} className="spin" />
-                            Generating...
+                            Generating... (you can switch tabs)
                         </>
                     ) : (
                         <>
@@ -93,20 +47,20 @@ export default function TextToSpeech() {
                     )}
                 </button>
 
-                {error && (
+                {ttsError && (
                     <div className="error-msg">
                         <AlertCircle size={20} />
-                        {error}
+                        {ttsError}
                     </div>
                 )}
 
-                {audioUrl && (
+                {ttsAudioUrl && (
                     <div className="success-box">
                         <div className="success-header">
                             <CheckCircle2 size={20} />
                             <span>Generated Successfully</span>
                         </div>
-                        <AudioVisualizer3D audioUrl={audioUrl} autoPlay={true} />
+                        <AudioVisualizer3D audioUrl={ttsAudioUrl} autoPlay={true} />
                     </div>
                 )}
             </div>

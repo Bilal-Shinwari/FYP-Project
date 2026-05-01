@@ -119,6 +119,21 @@
     color: var(--white);
 }
 
+.nav-generating-dot {
+    margin-left: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    flex-shrink: 0;
+    animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
+}
+
 .sidebar-footer {
     padding: var(--space-lg);
     border-top: 1px solid var(--gray-200);

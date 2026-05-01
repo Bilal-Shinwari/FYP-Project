@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { useGeneration } from '../context/GenerationContext';
 import {
     Mic, AudioWaveform, History, Settings,
     LogOut, Menu, X, User, Sun, Moon
@@ -9,20 +11,16 @@ import './DashboardLayout.css';
 
 export default function DashboardLayout() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark');
+    const { darkMode, toggleTheme } = useTheme();
     const { user, logout } = useAuth();
+    const { ttsLoading, cloneLoading } = useGeneration();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-        localStorage.setItem('theme', darkMode ? 'dark' : 'light');
-    }, [darkMode]);
 
     const handleLogout = () => { logout(); navigate('/login'); };
 
     const navItems = [
-        { icon: Mic, label: 'Text-to-Speech', path: '/dashboard/tts' },
-        { icon: AudioWaveform, label: 'Voice Cloning', path: '/dashboard/clone' },
+        { icon: Mic, label: 'Text-to-Speech', path: '/dashboard/tts', loading: ttsLoading },
+        { icon: AudioWaveform, label: 'Voice Cloning', path: '/dashboard/clone', loading: cloneLoading },
         { icon: History, label: 'History', path: '/dashboard/history' },
         { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
     ];
@@ -35,7 +33,7 @@ export default function DashboardLayout() {
                     {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
                 <span className="mobile-logo">بول Urdu TTS</span>
-                <button onClick={() => setDarkMode(!darkMode)} className="menu-btn">
+                <button onClick={toggleTheme} className="menu-btn">
                     {darkMode ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
             </div>
@@ -67,12 +65,13 @@ export default function DashboardLayout() {
                         >
                             <item.icon size={20} />
                             <span>{item.label}</span>
+                            {item.loading && <span className="nav-generating-dot" title="Generating..." />}
                         </NavLink>
                     ))}
                 </nav>
 
                 <div className="sidebar-footer">
-                    <button onClick={() => setDarkMode(!darkMode)} className="theme-toggle-btn">
+                    <button onClick={toggleTheme} className="theme-toggle-btn">
                         {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         <span>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
                     </button>

@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Home, Sparkles, Info, Play } from 'lucide-react';
+import { Home, Sparkles, Info, Play, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import './Header.css';
 
 export default function Header() {
+    const { darkMode, toggleTheme } = useTheme();
+
     return (
         <header className="header">
             <div className="container">
@@ -25,6 +28,9 @@ export default function Header() {
                             <Info size={18} />
                             <span>About</span>
                         </Link>
+                        <button className="theme-toggle-header" onClick={toggleTheme} aria-label="Toggle theme">
+                            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                        </button>
                         <Link to="/dashboard" className="nav-link nav-link-primary">
                             <Play size={18} />
                             <span>Try Demo</span>

@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { GenerationProvider } from './context/GenerationContext';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -15,62 +17,29 @@ import SettingsPage from "./pages/dashboard/Settings";
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
+  if (isLoading) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
   return children;
 }
 
 function AppContent() {
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={
-        <>
-          <Header />
-          <Home />
-          <Footer />
-        </>
-      } />
-      <Route path="/features" element={
-        <>
-          <Header />
-          <Features />
-          <Footer />
-        </>
-      } />
-      <Route path="/about" element={
-        <>
-          <Header />
-          <About />
-          <Footer />
-        </>
-      } />
-      <Route path="/login" element={
-        <>
-          <Header />
-          <Login />
-          <Footer />
-        </>
-      } />
-      <Route path="/register" element={
-        <>
-          <Header />
-          <Register />
-          <Footer />
-        </>
-      } />
+      {/* Public routes with header/footer */}
+      <Route path="/" element={<><Header /><Home /><Footer /></>} />
+      <Route path="/features" element={<><Header /><Features /><Footer /></>} />
+      <Route path="/about" element={<><Header /><About /><Footer /></>} />
 
-      {/* Protected Dashboard Routes */}
+      {/* Auth routes — full-page, no header/footer */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      {/* Protected dashboard */}
       <Route path="/dashboard" element={
         <ProtectedRoute>
-          <DashboardLayout />
+          <GenerationProvider>
+            <DashboardLayout />
+          </GenerationProvider>
         </ProtectedRoute>
       }>
         <Route index element={<Navigate to="/dashboard/tts" replace />} />
@@ -86,7 +55,9 @@ function AppContent() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
     </AuthProvider>
   );
 }

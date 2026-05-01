@@ -121,6 +121,55 @@
     }
 }
 
+.theme-toggle-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.theme-toggle-header:hover {
+    background: var(--gray-100);
+    color: var(--navy-primary);
+    border-color: var(--navy-accent);
+}
+
+[data-theme="dark"] .header {
+    background: #1e293b;
+    border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .logo-urdu,
+[data-theme="dark"] .logo-text {
+    color: var(--navy-accent);
+}
+
+[data-theme="dark"] .nav-link {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .nav-link:hover {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .theme-toggle-header {
+    border-color: #334155;
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .theme-toggle-header:hover {
+    background: #334155;
+    color: #f1f5f9;
+}
+
 @media (max-width: 480px) {
     .nav {
         gap: var(--space-xs);
@@ -128,5 +177,9 @@
 
     .nav-link:not(.nav-link-primary) {
         display: none;
+    }
+
+    .theme-toggle-header {
+        display: flex;
     }
 }

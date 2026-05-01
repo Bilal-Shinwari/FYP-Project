@@ -13,13 +13,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          lfs: true
 
       - name: Push hf-space to HF Spaces
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          git lfs install
           cd hf-space
           git init
+          git lfs install
           git config user.email "ci@github.com"
           git config user.name "GitHub Actions"
           git add .
